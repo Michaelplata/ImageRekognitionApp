@@ -1,0 +1,1856 @@
+{
+  "version": "tree-0.1",
+  "tree": {
+    "id": "App",
+    "path": "",
+    "children": {
+      "APIStack": {
+        "id": "APIStack",
+        "path": "APIStack",
+        "children": {
+          "CW-Workshop-Images": {
+            "id": "CW-Workshop-Images",
+            "path": "APIStack/CW-Workshop-Images",
+            "children": {
+              "Resource": {
+                "id": "Resource",
+                "path": "APIStack/CW-Workshop-Images/Resource",
+                "attributes": {
+                  "aws:cdk:cloudformation:type": "AWS::S3::Bucket",
+                  "aws:cdk:cloudformation:props": {}
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_s3.CfnBucket",
+                  "version": "2.118.0"
+                }
+              },
+              "Notifications": {
+                "id": "Notifications",
+                "path": "APIStack/CW-Workshop-Images/Notifications",
+                "children": {
+                  "Resource": {
+                    "id": "Resource",
+                    "path": "APIStack/CW-Workshop-Images/Notifications/Resource",
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.CfnResource",
+                      "version": "2.118.0"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "constructs.Construct",
+                  "version": "10.3.0"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.aws_s3.Bucket",
+              "version": "2.118.0"
+            }
+          },
+          "lamba_layer_zipfile": {
+            "id": "lamba_layer_zipfile",
+            "path": "APIStack/lamba_layer_zipfile",
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.aws_s3.BucketBase",
+              "version": "2.118.0"
+            }
+          },
+          "requests_layer": {
+            "id": "requests_layer",
+            "path": "APIStack/requests_layer",
+            "children": {
+              "Resource": {
+                "id": "Resource",
+                "path": "APIStack/requests_layer/Resource",
+                "attributes": {
+                  "aws:cdk:cloudformation:type": "AWS::Lambda::LayerVersion",
+                  "aws:cdk:cloudformation:props": {
+                    "compatibleRuntimes": [
+                      "python3.11"
+                    ],
+                    "content": {
+                      "s3Bucket": "lab-resources-d41cfee0",
+                      "s3Key": "requests_layer3_11.zip"
+                    },
+                    "layerName": "requests_layer"
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_lambda.CfnLayerVersion",
+                  "version": "2.118.0"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.aws_lambda.LayerVersion",
+              "version": "2.118.0"
+            }
+          },
+          "ImageGetAndSaveLambda": {
+            "id": "ImageGetAndSaveLambda",
+            "path": "APIStack/ImageGetAndSaveLambda",
+            "children": {
+              "ServiceRole": {
+                "id": "ServiceRole",
+                "path": "APIStack/ImageGetAndSaveLambda/ServiceRole",
+                "children": {
+                  "ImportServiceRole": {
+                    "id": "ImportServiceRole",
+                    "path": "APIStack/ImageGetAndSaveLambda/ServiceRole/ImportServiceRole",
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.Resource",
+                      "version": "2.118.0"
+                    }
+                  },
+                  "PrecreatedRoleServiceRole": {
+                    "id": "PrecreatedRoleServiceRole",
+                    "path": "APIStack/ImageGetAndSaveLambda/ServiceRole/PrecreatedRoleServiceRole",
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.Resource",
+                      "version": "2.118.0"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_iam.Role",
+                  "version": "2.118.0"
+                }
+              },
+              "Code": {
+                "id": "Code",
+                "path": "APIStack/ImageGetAndSaveLambda/Code",
+                "children": {
+                  "Stage": {
+                    "id": "Stage",
+                    "path": "APIStack/ImageGetAndSaveLambda/Code/Stage",
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.AssetStaging",
+                      "version": "2.118.0"
+                    }
+                  },
+                  "AssetBucket": {
+                    "id": "AssetBucket",
+                    "path": "APIStack/ImageGetAndSaveLambda/Code/AssetBucket",
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_s3.BucketBase",
+                      "version": "2.118.0"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_s3_assets.Asset",
+                  "version": "2.118.0"
+                }
+              },
+              "Resource": {
+                "id": "Resource",
+                "path": "APIStack/ImageGetAndSaveLambda/Resource",
+                "attributes": {
+                  "aws:cdk:cloudformation:type": "AWS::Lambda::Function",
+                  "aws:cdk:cloudformation:props": {
+                    "code": {
+                      "s3Bucket": {
+                        "Fn::Sub": "cdk-hnb659fds-assets-${AWS::AccountId}-us-east-1"
+                      },
+                      "s3Key": "e1c65aff9d91856dd8fca7b3fbb5d2c6d24f2a146787608fef8d7ffa4162eed8.zip"
+                    },
+                    "environment": {
+                      "variables": {
+                        "BUCKET_NAME": {
+                          "Ref": "CWWorkshopImagesF0DA5E9F"
+                        }
+                      }
+                    },
+                    "functionName": "ImageGetAndSaveLambda",
+                    "handler": "get_save_image.handler",
+                    "layers": [
+                      {
+                        "Ref": "requestslayerBEFAAC3C"
+                      }
+                    ],
+                    "role": {
+                      "Fn::Join": [
+                        "",
+                        [
+                          "arn:",
+                          {
+                            "Ref": "AWS::Partition"
+                          },
+                          ":iam::",
+                          {
+                            "Ref": "AWS::AccountId"
+                          },
+                          ":role/cdk-apistack-role"
+                        ]
+                      ]
+                    },
+                    "runtime": "python3.11"
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_lambda.CfnFunction",
+                  "version": "2.118.0"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.aws_lambda.Function",
+              "version": "2.118.0"
+            }
+          },
+          "REST_API": {
+            "id": "REST_API",
+            "path": "APIStack/REST_API",
+            "children": {
+              "Resource": {
+                "id": "Resource",
+                "path": "APIStack/REST_API/Resource",
+                "attributes": {
+                  "aws:cdk:cloudformation:type": "AWS::ApiGateway::RestApi",
+                  "aws:cdk:cloudformation:props": {
+                    "description": "CW workshop - upload image for workshop.",
+                    "name": "Image Upload Service"
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_apigateway.CfnRestApi",
+                  "version": "2.118.0"
+                }
+              },
+              "Deployment": {
+                "id": "Deployment",
+                "path": "APIStack/REST_API/Deployment",
+                "children": {
+                  "Resource": {
+                    "id": "Resource",
+                    "path": "APIStack/REST_API/Deployment/Resource",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::ApiGateway::Deployment",
+                      "aws:cdk:cloudformation:props": {
+                        "description": "CW workshop - upload image for workshop.",
+                        "restApiId": {
+                          "Ref": "RESTAPI561F5063"
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_apigateway.CfnDeployment",
+                      "version": "2.118.0"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_apigateway.Deployment",
+                  "version": "2.118.0"
+                }
+              },
+              "DeploymentStage.prod": {
+                "id": "DeploymentStage.prod",
+                "path": "APIStack/REST_API/DeploymentStage.prod",
+                "children": {
+                  "Resource": {
+                    "id": "Resource",
+                    "path": "APIStack/REST_API/DeploymentStage.prod/Resource",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::ApiGateway::Stage",
+                      "aws:cdk:cloudformation:props": {
+                        "deploymentId": {
+                          "Ref": "RESTAPIDeployment929885702852626a3f4d864511a4e936eb1e6fb5"
+                        },
+                        "restApiId": {
+                          "Ref": "RESTAPI561F5063"
+                        },
+                        "stageName": "prod"
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_apigateway.CfnStage",
+                      "version": "2.118.0"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_apigateway.Stage",
+                  "version": "2.118.0"
+                }
+              },
+              "Endpoint": {
+                "id": "Endpoint",
+                "path": "APIStack/REST_API/Endpoint",
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.CfnOutput",
+                  "version": "2.118.0"
+                }
+              },
+              "Default": {
+                "id": "Default",
+                "path": "APIStack/REST_API/Default",
+                "children": {
+                  "GET": {
+                    "id": "GET",
+                    "path": "APIStack/REST_API/Default/GET",
+                    "children": {
+                      "ApiPermission.APIStackRESTAPI4904C8F9.GET..": {
+                        "id": "ApiPermission.APIStackRESTAPI4904C8F9.GET..",
+                        "path": "APIStack/REST_API/Default/GET/ApiPermission.APIStackRESTAPI4904C8F9.GET..",
+                        "attributes": {
+                          "aws:cdk:cloudformation:type": "AWS::Lambda::Permission",
+                          "aws:cdk:cloudformation:props": {
+                            "action": "lambda:InvokeFunction",
+                            "functionName": {
+                              "Fn::GetAtt": [
+                                "ImageGetAndSaveLambdaD4989ABD",
+                                "Arn"
+                              ]
+                            },
+                            "principal": "apigateway.amazonaws.com",
+                            "sourceArn": {
+                              "Fn::Join": [
+                                "",
+                                [
+                                  "arn:",
+                                  {
+                                    "Ref": "AWS::Partition"
+                                  },
+                                  ":execute-api:us-east-1:",
+                                  {
+                                    "Ref": "AWS::AccountId"
+                                  },
+                                  ":",
+                                  {
+                                    "Ref": "RESTAPI561F5063"
+                                  },
+                                  "/",
+                                  {
+                                    "Ref": "RESTAPIDeploymentStageprod97809C34"
+                                  },
+                                  "/GET/"
+                                ]
+                              ]
+                            }
+                          }
+                        },
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.aws_lambda.CfnPermission",
+                          "version": "2.118.0"
+                        }
+                      },
+                      "ApiPermission.Test.APIStackRESTAPI4904C8F9.GET..": {
+                        "id": "ApiPermission.Test.APIStackRESTAPI4904C8F9.GET..",
+                        "path": "APIStack/REST_API/Default/GET/ApiPermission.Test.APIStackRESTAPI4904C8F9.GET..",
+                        "attributes": {
+                          "aws:cdk:cloudformation:type": "AWS::Lambda::Permission",
+                          "aws:cdk:cloudformation:props": {
+                            "action": "lambda:InvokeFunction",
+                            "functionName": {
+                              "Fn::GetAtt": [
+                                "ImageGetAndSaveLambdaD4989ABD",
+                                "Arn"
+                              ]
+                            },
+                            "principal": "apigateway.amazonaws.com",
+                            "sourceArn": {
+                              "Fn::Join": [
+                                "",
+                                [
+                                  "arn:",
+                                  {
+                                    "Ref": "AWS::Partition"
+                                  },
+                                  ":execute-api:us-east-1:",
+                                  {
+                                    "Ref": "AWS::AccountId"
+                                  },
+                                  ":",
+                                  {
+                                    "Ref": "RESTAPI561F5063"
+                                  },
+                                  "/test-invoke-stage/GET/"
+                                ]
+                              ]
+                            }
+                          }
+                        },
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.aws_lambda.CfnPermission",
+                          "version": "2.118.0"
+                        }
+                      },
+                      "Resource": {
+                        "id": "Resource",
+                        "path": "APIStack/REST_API/Default/GET/Resource",
+                        "attributes": {
+                          "aws:cdk:cloudformation:type": "AWS::ApiGateway::Method",
+                          "aws:cdk:cloudformation:props": {
+                            "authorizationType": "NONE",
+                            "httpMethod": "GET",
+                            "integration": {
+                              "type": "AWS_PROXY",
+                              "uri": {
+                                "Fn::Join": [
+                                  "",
+                                  [
+                                    "arn:",
+                                    {
+                                      "Ref": "AWS::Partition"
+                                    },
+                                    ":apigateway:us-east-1:lambda:path/2015-03-31/functions/",
+                                    {
+                                      "Fn::GetAtt": [
+                                        "ImageGetAndSaveLambdaD4989ABD",
+                                        "Arn"
+                                      ]
+                                    },
+                                    "/invocations"
+                                  ]
+                                ]
+                              },
+                              "integrationHttpMethod": "POST",
+                              "requestTemplates": {
+                                "application/json": "{ \"statusCode\": \"200\" }"
+                              }
+                            },
+                            "resourceId": {
+                              "Fn::GetAtt": [
+                                "RESTAPI561F5063",
+                                "RootResourceId"
+                              ]
+                            },
+                            "restApiId": {
+                              "Ref": "RESTAPI561F5063"
+                            }
+                          }
+                        },
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.aws_apigateway.CfnMethod",
+                          "version": "2.118.0"
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_apigateway.Method",
+                      "version": "2.118.0"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_apigateway.ResourceBase",
+                  "version": "2.118.0"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.aws_apigateway.RestApi",
+              "version": "2.118.0"
+            }
+          },
+          "uploaded_image_queue": {
+            "id": "uploaded_image_queue",
+            "path": "APIStack/uploaded_image_queue",
+            "children": {
+              "Resource": {
+                "id": "Resource",
+                "path": "APIStack/uploaded_image_queue/Resource",
+                "attributes": {
+                  "aws:cdk:cloudformation:type": "AWS::SQS::Queue",
+                  "aws:cdk:cloudformation:props": {
+                    "visibilityTimeout": 30
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_sqs.CfnQueue",
+                  "version": "2.118.0"
+                }
+              },
+              "Policy": {
+                "id": "Policy",
+                "path": "APIStack/uploaded_image_queue/Policy",
+                "children": {
+                  "Resource": {
+                    "id": "Resource",
+                    "path": "APIStack/uploaded_image_queue/Policy/Resource",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::SQS::QueuePolicy",
+                      "aws:cdk:cloudformation:props": {
+                        "policyDocument": {
+                          "Statement": [
+                            {
+                              "Action": "sqs:SendMessage",
+                              "Condition": {
+                                "ArnEquals": {
+                                  "aws:SourceArn": {
+                                    "Ref": "uploadedimagetopic9EF836CA"
+                                  }
+                                }
+                              },
+                              "Effect": "Allow",
+                              "Principal": {
+                                "Service": "sns.amazonaws.com"
+                              },
+                              "Resource": {
+                                "Fn::GetAtt": [
+                                  "uploadedimagequeue43D6CD3D",
+                                  "Arn"
+                                ]
+                              }
+                            }
+                          ],
+                          "Version": "2012-10-17"
+                        },
+                        "queues": [
+                          {
+                            "Ref": "uploadedimagequeue43D6CD3D"
+                          }
+                        ]
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_sqs.CfnQueuePolicy",
+                      "version": "2.118.0"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_sqs.QueuePolicy",
+                  "version": "2.118.0"
+                }
+              },
+              "APIStackuploadedimagetopic18C46AFD": {
+                "id": "APIStackuploadedimagetopic18C46AFD",
+                "path": "APIStack/uploaded_image_queue/APIStackuploadedimagetopic18C46AFD",
+                "children": {
+                  "Resource": {
+                    "id": "Resource",
+                    "path": "APIStack/uploaded_image_queue/APIStackuploadedimagetopic18C46AFD/Resource",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::SNS::Subscription",
+                      "aws:cdk:cloudformation:props": {
+                        "endpoint": {
+                          "Fn::GetAtt": [
+                            "uploadedimagequeue43D6CD3D",
+                            "Arn"
+                          ]
+                        },
+                        "protocol": "sqs",
+                        "rawMessageDelivery": true,
+                        "topicArn": {
+                          "Ref": "uploadedimagetopic9EF836CA"
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_sns.CfnSubscription",
+                      "version": "2.118.0"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_sns.Subscription",
+                  "version": "2.118.0"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.aws_sqs.Queue",
+              "version": "2.118.0"
+            }
+          },
+          "uploaded_image_topic": {
+            "id": "uploaded_image_topic",
+            "path": "APIStack/uploaded_image_topic",
+            "children": {
+              "Resource": {
+                "id": "Resource",
+                "path": "APIStack/uploaded_image_topic/Resource",
+                "attributes": {
+                  "aws:cdk:cloudformation:type": "AWS::SNS::Topic",
+                  "aws:cdk:cloudformation:props": {}
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_sns.CfnTopic",
+                  "version": "2.118.0"
+                }
+              },
+              "Policy": {
+                "id": "Policy",
+                "path": "APIStack/uploaded_image_topic/Policy",
+                "children": {
+                  "Resource": {
+                    "id": "Resource",
+                    "path": "APIStack/uploaded_image_topic/Policy/Resource",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::SNS::TopicPolicy",
+                      "aws:cdk:cloudformation:props": {
+                        "policyDocument": {
+                          "Statement": [
+                            {
+                              "Action": "sns:Publish",
+                              "Condition": {
+                                "ArnLike": {
+                                  "aws:SourceArn": {
+                                    "Fn::GetAtt": [
+                                      "CWWorkshopImagesF0DA5E9F",
+                                      "Arn"
+                                    ]
+                                  }
+                                }
+                              },
+                              "Effect": "Allow",
+                              "Principal": {
+                                "Service": "s3.amazonaws.com"
+                              },
+                              "Resource": {
+                                "Ref": "uploadedimagetopic9EF836CA"
+                              },
+                              "Sid": "0"
+                            }
+                          ],
+                          "Version": "2012-10-17"
+                        },
+                        "topics": [
+                          {
+                            "Ref": "uploadedimagetopic9EF836CA"
+                          }
+                        ]
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_sns.CfnTopicPolicy",
+                      "version": "2.118.0"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_sns.TopicPolicy",
+                  "version": "2.118.0"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.aws_sns.Topic",
+              "version": "2.118.0"
+            }
+          },
+          "BucketNotificationsHandler050a0587b7544547bf325f094a3db834": {
+            "id": "BucketNotificationsHandler050a0587b7544547bf325f094a3db834",
+            "path": "APIStack/BucketNotificationsHandler050a0587b7544547bf325f094a3db834",
+            "children": {
+              "Role": {
+                "id": "Role",
+                "path": "APIStack/BucketNotificationsHandler050a0587b7544547bf325f094a3db834/Role",
+                "children": {
+                  "ImportRole": {
+                    "id": "ImportRole",
+                    "path": "APIStack/BucketNotificationsHandler050a0587b7544547bf325f094a3db834/Role/ImportRole",
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.Resource",
+                      "version": "2.118.0"
+                    }
+                  },
+                  "PrecreatedRoleRole": {
+                    "id": "PrecreatedRoleRole",
+                    "path": "APIStack/BucketNotificationsHandler050a0587b7544547bf325f094a3db834/Role/PrecreatedRoleRole",
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.Resource",
+                      "version": "2.118.0"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_iam.Role",
+                  "version": "2.118.0"
+                }
+              },
+              "Resource": {
+                "id": "Resource",
+                "path": "APIStack/BucketNotificationsHandler050a0587b7544547bf325f094a3db834/Resource",
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.CfnResource",
+                  "version": "2.118.0"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "constructs.Construct",
+              "version": "10.3.0"
+            }
+          },
+          "CDKMetadata": {
+            "id": "CDKMetadata",
+            "path": "APIStack/CDKMetadata",
+            "children": {
+              "Default": {
+                "id": "Default",
+                "path": "APIStack/CDKMetadata/Default",
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.CfnResource",
+                  "version": "2.118.0"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "constructs.Construct",
+              "version": "10.3.0"
+            }
+          },
+          "Exports": {
+            "id": "Exports",
+            "path": "APIStack/Exports",
+            "children": {
+              "Output{\"Ref\":\"uploadedimagequeue43D6CD3D\"}": {
+                "id": "Output{\"Ref\":\"uploadedimagequeue43D6CD3D\"}",
+                "path": "APIStack/Exports/Output{\"Ref\":\"uploadedimagequeue43D6CD3D\"}",
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.CfnOutput",
+                  "version": "2.118.0"
+                }
+              },
+              "Output{\"Fn::GetAtt\":[\"uploadedimagequeue43D6CD3D\",\"Arn\"]}": {
+                "id": "Output{\"Fn::GetAtt\":[\"uploadedimagequeue43D6CD3D\",\"Arn\"]}",
+                "path": "APIStack/Exports/Output{\"Fn::GetAtt\":[\"uploadedimagequeue43D6CD3D\",\"Arn\"]}",
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.CfnOutput",
+                  "version": "2.118.0"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "constructs.Construct",
+              "version": "10.3.0"
+            }
+          },
+          "BootstrapVersion": {
+            "id": "BootstrapVersion",
+            "path": "APIStack/BootstrapVersion",
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.CfnParameter",
+              "version": "2.118.0"
+            }
+          },
+          "CheckBootstrapVersion": {
+            "id": "CheckBootstrapVersion",
+            "path": "APIStack/CheckBootstrapVersion",
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.CfnRule",
+              "version": "2.118.0"
+            }
+          }
+        },
+        "constructInfo": {
+          "fqn": "aws-cdk-lib.Stack",
+          "version": "2.118.0"
+        }
+      },
+      "PolicySynthesizer": {
+        "id": "PolicySynthesizer",
+        "path": "PolicySynthesizer",
+        "constructInfo": {
+          "fqn": "constructs.Construct",
+          "version": "10.3.0"
+        }
+      },
+      "IntegrationStack": {
+        "id": "IntegrationStack",
+        "path": "IntegrationStack",
+        "children": {
+          "rekognized_image_queue": {
+            "id": "rekognized_image_queue",
+            "path": "IntegrationStack/rekognized_image_queue",
+            "children": {
+              "Resource": {
+                "id": "Resource",
+                "path": "IntegrationStack/rekognized_image_queue/Resource",
+                "attributes": {
+                  "aws:cdk:cloudformation:type": "AWS::SQS::Queue",
+                  "aws:cdk:cloudformation:props": {
+                    "visibilityTimeout": 30
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_sqs.CfnQueue",
+                  "version": "2.118.0"
+                }
+              },
+              "Policy": {
+                "id": "Policy",
+                "path": "IntegrationStack/rekognized_image_queue/Policy",
+                "children": {
+                  "Resource": {
+                    "id": "Resource",
+                    "path": "IntegrationStack/rekognized_image_queue/Policy/Resource",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::SQS::QueuePolicy",
+                      "aws:cdk:cloudformation:props": {
+                        "policyDocument": {
+                          "Statement": [
+                            {
+                              "Action": "sqs:SendMessage",
+                              "Condition": {
+                                "ArnEquals": {
+                                  "aws:SourceArn": {
+                                    "Ref": "rekognizedimagetopic58425D15"
+                                  }
+                                }
+                              },
+                              "Effect": "Allow",
+                              "Principal": {
+                                "Service": "sns.amazonaws.com"
+                              },
+                              "Resource": {
+                                "Fn::GetAtt": [
+                                  "rekognizedimagequeue8EB5D22B",
+                                  "Arn"
+                                ]
+                              }
+                            }
+                          ],
+                          "Version": "2012-10-17"
+                        },
+                        "queues": [
+                          {
+                            "Ref": "rekognizedimagequeue8EB5D22B"
+                          }
+                        ]
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_sqs.CfnQueuePolicy",
+                      "version": "2.118.0"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_sqs.QueuePolicy",
+                  "version": "2.118.0"
+                }
+              },
+              "IntegrationStackrekognizedimagetopic71D3FAB2": {
+                "id": "IntegrationStackrekognizedimagetopic71D3FAB2",
+                "path": "IntegrationStack/rekognized_image_queue/IntegrationStackrekognizedimagetopic71D3FAB2",
+                "children": {
+                  "Resource": {
+                    "id": "Resource",
+                    "path": "IntegrationStack/rekognized_image_queue/IntegrationStackrekognizedimagetopic71D3FAB2/Resource",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::SNS::Subscription",
+                      "aws:cdk:cloudformation:props": {
+                        "endpoint": {
+                          "Fn::GetAtt": [
+                            "rekognizedimagequeue8EB5D22B",
+                            "Arn"
+                          ]
+                        },
+                        "protocol": "sqs",
+                        "rawMessageDelivery": true,
+                        "topicArn": {
+                          "Ref": "rekognizedimagetopic58425D15"
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_sns.CfnSubscription",
+                      "version": "2.118.0"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_sns.Subscription",
+                  "version": "2.118.0"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.aws_sqs.Queue",
+              "version": "2.118.0"
+            }
+          },
+          "rekognized_image_topic": {
+            "id": "rekognized_image_topic",
+            "path": "IntegrationStack/rekognized_image_topic",
+            "children": {
+              "Resource": {
+                "id": "Resource",
+                "path": "IntegrationStack/rekognized_image_topic/Resource",
+                "attributes": {
+                  "aws:cdk:cloudformation:type": "AWS::SNS::Topic",
+                  "aws:cdk:cloudformation:props": {}
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_sns.CfnTopic",
+                  "version": "2.118.0"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.aws_sns.Topic",
+              "version": "2.118.0"
+            }
+          },
+          "lamba_layer_zipfile": {
+            "id": "lamba_layer_zipfile",
+            "path": "IntegrationStack/lamba_layer_zipfile",
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.aws_s3.BucketBase",
+              "version": "2.118.0"
+            }
+          },
+          "requests_layer": {
+            "id": "requests_layer",
+            "path": "IntegrationStack/requests_layer",
+            "children": {
+              "Resource": {
+                "id": "Resource",
+                "path": "IntegrationStack/requests_layer/Resource",
+                "attributes": {
+                  "aws:cdk:cloudformation:type": "AWS::Lambda::LayerVersion",
+                  "aws:cdk:cloudformation:props": {
+                    "compatibleRuntimes": [
+                      "python3.11"
+                    ],
+                    "content": {
+                      "s3Bucket": "lab-resources-d41cfee0",
+                      "s3Key": "requests_layer3_11.zip"
+                    },
+                    "layerName": "requests_layer"
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_lambda.CfnLayerVersion",
+                  "version": "2.118.0"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.aws_lambda.LayerVersion",
+              "version": "2.118.0"
+            }
+          },
+          "IntegrationLambda": {
+            "id": "IntegrationLambda",
+            "path": "IntegrationStack/IntegrationLambda",
+            "children": {
+              "ServiceRole": {
+                "id": "ServiceRole",
+                "path": "IntegrationStack/IntegrationLambda/ServiceRole",
+                "children": {
+                  "ImportServiceRole": {
+                    "id": "ImportServiceRole",
+                    "path": "IntegrationStack/IntegrationLambda/ServiceRole/ImportServiceRole",
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.Resource",
+                      "version": "2.118.0"
+                    }
+                  },
+                  "Resource": {
+                    "id": "Resource",
+                    "path": "IntegrationStack/IntegrationLambda/ServiceRole/Resource",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::IAM::Role",
+                      "aws:cdk:cloudformation:props": {
+                        "assumeRolePolicyDocument": {
+                          "Statement": [
+                            {
+                              "Action": "sts:AssumeRole",
+                              "Effect": "Allow",
+                              "Principal": {
+                                "Service": "lambda.amazonaws.com"
+                              }
+                            }
+                          ],
+                          "Version": "2012-10-17"
+                        },
+                        "managedPolicyArns": [
+                          {
+                            "Fn::Join": [
+                              "",
+                              [
+                                "arn:",
+                                {
+                                  "Ref": "AWS::Partition"
+                                },
+                                ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+                              ]
+                            ]
+                          }
+                        ]
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_iam.CfnRole",
+                      "version": "2.118.0"
+                    }
+                  },
+                  "DefaultPolicy": {
+                    "id": "DefaultPolicy",
+                    "path": "IntegrationStack/IntegrationLambda/ServiceRole/DefaultPolicy",
+                    "children": {
+                      "Resource": {
+                        "id": "Resource",
+                        "path": "IntegrationStack/IntegrationLambda/ServiceRole/DefaultPolicy/Resource",
+                        "attributes": {
+                          "aws:cdk:cloudformation:type": "AWS::IAM::Policy",
+                          "aws:cdk:cloudformation:props": {
+                            "policyDocument": {
+                              "Statement": [
+                                {
+                                  "Action": "ssm:GetParameter",
+                                  "Effect": "Allow",
+                                  "Resource": "*"
+                                },
+                                {
+                                  "Action": [
+                                    "sqs:ChangeMessageVisibility",
+                                    "sqs:DeleteMessage",
+                                    "sqs:GetQueueAttributes",
+                                    "sqs:GetQueueUrl",
+                                    "sqs:ReceiveMessage"
+                                  ],
+                                  "Effect": "Allow",
+                                  "Resource": {
+                                    "Fn::GetAtt": [
+                                      "rekognizedimagequeue8EB5D22B",
+                                      "Arn"
+                                    ]
+                                  }
+                                }
+                              ],
+                              "Version": "2012-10-17"
+                            },
+                            "policyName": "IntegrationLambdaServiceRoleDefaultPolicy41EB3AE9",
+                            "roles": [
+                              {
+                                "Ref": "IntegrationLambdaServiceRoleD10E6540"
+                              }
+                            ]
+                          }
+                        },
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.aws_iam.CfnPolicy",
+                          "version": "2.118.0"
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_iam.Policy",
+                      "version": "2.118.0"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_iam.Role",
+                  "version": "2.118.0"
+                }
+              },
+              "Code": {
+                "id": "Code",
+                "path": "IntegrationStack/IntegrationLambda/Code",
+                "children": {
+                  "Stage": {
+                    "id": "Stage",
+                    "path": "IntegrationStack/IntegrationLambda/Code/Stage",
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.AssetStaging",
+                      "version": "2.118.0"
+                    }
+                  },
+                  "AssetBucket": {
+                    "id": "AssetBucket",
+                    "path": "IntegrationStack/IntegrationLambda/Code/AssetBucket",
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_s3.BucketBase",
+                      "version": "2.118.0"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_s3_assets.Asset",
+                  "version": "2.118.0"
+                }
+              },
+              "Resource": {
+                "id": "Resource",
+                "path": "IntegrationStack/IntegrationLambda/Resource",
+                "attributes": {
+                  "aws:cdk:cloudformation:type": "AWS::Lambda::Function",
+                  "aws:cdk:cloudformation:props": {
+                    "code": {
+                      "s3Bucket": {
+                        "Fn::Sub": "cdk-hnb659fds-assets-${AWS::AccountId}-us-east-1"
+                      },
+                      "s3Key": "a1c6b3ac5e3f1bf31de10a0db0301f44bbedcdf7c718fc9b26cacf7b3a6a4aba.zip"
+                    },
+                    "handler": "send_email.handler",
+                    "layers": [
+                      {
+                        "Ref": "requestslayerBEFAAC3C"
+                      }
+                    ],
+                    "role": {
+                      "Fn::GetAtt": [
+                        "IntegrationLambdaServiceRoleD10E6540",
+                        "Arn"
+                      ]
+                    },
+                    "runtime": "python3.11"
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_lambda.CfnFunction",
+                  "version": "2.118.0"
+                }
+              },
+              "SqsEventSource:IntegrationStackrekognizedimagequeue0A194F37": {
+                "id": "SqsEventSource:IntegrationStackrekognizedimagequeue0A194F37",
+                "path": "IntegrationStack/IntegrationLambda/SqsEventSource:IntegrationStackrekognizedimagequeue0A194F37",
+                "children": {
+                  "Resource": {
+                    "id": "Resource",
+                    "path": "IntegrationStack/IntegrationLambda/SqsEventSource:IntegrationStackrekognizedimagequeue0A194F37/Resource",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::Lambda::EventSourceMapping",
+                      "aws:cdk:cloudformation:props": {
+                        "eventSourceArn": {
+                          "Fn::GetAtt": [
+                            "rekognizedimagequeue8EB5D22B",
+                            "Arn"
+                          ]
+                        },
+                        "functionName": {
+                          "Ref": "IntegrationLambdaED741C51"
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_lambda.CfnEventSourceMapping",
+                      "version": "2.118.0"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_lambda.EventSourceMapping",
+                  "version": "2.118.0"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.aws_lambda.Function",
+              "version": "2.118.0"
+            }
+          },
+          "CDKMetadata": {
+            "id": "CDKMetadata",
+            "path": "IntegrationStack/CDKMetadata",
+            "children": {
+              "Default": {
+                "id": "Default",
+                "path": "IntegrationStack/CDKMetadata/Default",
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.CfnResource",
+                  "version": "2.118.0"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "constructs.Construct",
+              "version": "10.3.0"
+            }
+          },
+          "Exports": {
+            "id": "Exports",
+            "path": "IntegrationStack/Exports",
+            "children": {
+              "Output{\"Ref\":\"rekognizedimagetopic58425D15\"}": {
+                "id": "Output{\"Ref\":\"rekognizedimagetopic58425D15\"}",
+                "path": "IntegrationStack/Exports/Output{\"Ref\":\"rekognizedimagetopic58425D15\"}",
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.CfnOutput",
+                  "version": "2.118.0"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "constructs.Construct",
+              "version": "10.3.0"
+            }
+          },
+          "BootstrapVersion": {
+            "id": "BootstrapVersion",
+            "path": "IntegrationStack/BootstrapVersion",
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.CfnParameter",
+              "version": "2.118.0"
+            }
+          },
+          "CheckBootstrapVersion": {
+            "id": "CheckBootstrapVersion",
+            "path": "IntegrationStack/CheckBootstrapVersion",
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.CfnRule",
+              "version": "2.118.0"
+            }
+          }
+        },
+        "constructInfo": {
+          "fqn": "aws-cdk-lib.Stack",
+          "version": "2.118.0"
+        }
+      },
+      "RekognitionStack": {
+        "id": "RekognitionStack",
+        "path": "RekognitionStack",
+        "children": {
+          "RekGroup": {
+            "id": "RekGroup",
+            "path": "RekognitionStack/RekGroup",
+            "children": {
+              "Resource": {
+                "id": "Resource",
+                "path": "RekognitionStack/RekGroup/Resource",
+                "attributes": {
+                  "aws:cdk:cloudformation:type": "AWS::IAM::Group",
+                  "aws:cdk:cloudformation:props": {}
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_iam.CfnGroup",
+                  "version": "2.118.0"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.aws_iam.Group",
+              "version": "2.118.0"
+            }
+          },
+          "RekUser": {
+            "id": "RekUser",
+            "path": "RekognitionStack/RekUser",
+            "children": {
+              "Resource": {
+                "id": "Resource",
+                "path": "RekognitionStack/RekUser/Resource",
+                "attributes": {
+                  "aws:cdk:cloudformation:type": "AWS::IAM::User",
+                  "aws:cdk:cloudformation:props": {
+                    "groups": [
+                      {
+                        "Ref": "RekGroupA41E1449"
+                      }
+                    ]
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_iam.CfnUser",
+                  "version": "2.118.0"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.aws_iam.User",
+              "version": "2.118.0"
+            }
+          },
+          "Classifications": {
+            "id": "Classifications",
+            "path": "RekognitionStack/Classifications",
+            "children": {
+              "Resource": {
+                "id": "Resource",
+                "path": "RekognitionStack/Classifications/Resource",
+                "attributes": {
+                  "aws:cdk:cloudformation:type": "AWS::DynamoDB::Table",
+                  "aws:cdk:cloudformation:props": {
+                    "attributeDefinitions": [
+                      {
+                        "attributeName": "image",
+                        "attributeType": "S"
+                      }
+                    ],
+                    "keySchema": [
+                      {
+                        "attributeName": "image",
+                        "keyType": "HASH"
+                      }
+                    ],
+                    "provisionedThroughput": {
+                      "readCapacityUnits": 5,
+                      "writeCapacityUnits": 5
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_dynamodb.CfnTable",
+                  "version": "2.118.0"
+                }
+              },
+              "ImportScalingRole": {
+                "id": "ImportScalingRole",
+                "path": "RekognitionStack/Classifications/ImportScalingRole",
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.Resource",
+                  "version": "2.118.0"
+                }
+              },
+              "ScalingRole": {
+                "id": "ScalingRole",
+                "path": "RekognitionStack/Classifications/ScalingRole",
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.Resource",
+                  "version": "2.118.0"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.aws_dynamodb.Table",
+              "version": "2.118.0"
+            }
+          },
+          "image_recognition": {
+            "id": "image_recognition",
+            "path": "RekognitionStack/image_recognition",
+            "children": {
+              "ServiceRole": {
+                "id": "ServiceRole",
+                "path": "RekognitionStack/image_recognition/ServiceRole",
+                "children": {
+                  "ImportServiceRole": {
+                    "id": "ImportServiceRole",
+                    "path": "RekognitionStack/image_recognition/ServiceRole/ImportServiceRole",
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.Resource",
+                      "version": "2.118.0"
+                    }
+                  },
+                  "PrecreatedRoleServiceRole": {
+                    "id": "PrecreatedRoleServiceRole",
+                    "path": "RekognitionStack/image_recognition/ServiceRole/PrecreatedRoleServiceRole",
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.Resource",
+                      "version": "2.118.0"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_iam.Role",
+                  "version": "2.118.0"
+                }
+              },
+              "Code": {
+                "id": "Code",
+                "path": "RekognitionStack/image_recognition/Code",
+                "children": {
+                  "Stage": {
+                    "id": "Stage",
+                    "path": "RekognitionStack/image_recognition/Code/Stage",
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.AssetStaging",
+                      "version": "2.118.0"
+                    }
+                  },
+                  "AssetBucket": {
+                    "id": "AssetBucket",
+                    "path": "RekognitionStack/image_recognition/Code/AssetBucket",
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_s3.BucketBase",
+                      "version": "2.118.0"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_s3_assets.Asset",
+                  "version": "2.118.0"
+                }
+              },
+              "Resource": {
+                "id": "Resource",
+                "path": "RekognitionStack/image_recognition/Resource",
+                "attributes": {
+                  "aws:cdk:cloudformation:type": "AWS::Lambda::Function",
+                  "aws:cdk:cloudformation:props": {
+                    "code": {
+                      "s3Bucket": {
+                        "Fn::Sub": "cdk-hnb659fds-assets-${AWS::AccountId}-us-east-1"
+                      },
+                      "s3Key": "06e921cd0a07cce10fca73b31d2108307a1ad534853294c7dff47050ebc0fb05.zip"
+                    },
+                    "environment": {
+                      "variables": {
+                        "TABLE_NAME": {
+                          "Ref": "Classifications0C921F6C"
+                        },
+                        "SQS_QUEUE_URL": {
+                          "Fn::ImportValue": "APIStack:ExportsOutputRefuploadedimagequeue43D6CD3DC3CB92B0"
+                        },
+                        "TOPIC_ARN": {
+                          "Fn::ImportValue": "IntegrationStack:ExportsOutputRefrekognizedimagetopic58425D1526204F7A"
+                        }
+                      }
+                    },
+                    "handler": "image_recognition.handler",
+                    "role": {
+                      "Fn::Join": [
+                        "",
+                        [
+                          "arn:",
+                          {
+                            "Ref": "AWS::Partition"
+                          },
+                          ":iam::",
+                          {
+                            "Ref": "AWS::AccountId"
+                          },
+                          ":role/cdk-rekognition-role"
+                        ]
+                      ]
+                    },
+                    "runtime": "python3.11"
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_lambda.CfnFunction",
+                  "version": "2.118.0"
+                }
+              },
+              "ImgRekognitionLambda": {
+                "id": "ImgRekognitionLambda",
+                "path": "RekognitionStack/image_recognition/ImgRekognitionLambda",
+                "children": {
+                  "Resource": {
+                    "id": "Resource",
+                    "path": "RekognitionStack/image_recognition/ImgRekognitionLambda/Resource",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::Lambda::EventSourceMapping",
+                      "aws:cdk:cloudformation:props": {
+                        "eventSourceArn": {
+                          "Fn::ImportValue": "APIStack:ExportsOutputFnGetAttuploadedimagequeue43D6CD3DArnCB5DD7AB"
+                        },
+                        "functionName": {
+                          "Ref": "imagerecognitionDAD22C25"
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_lambda.CfnEventSourceMapping",
+                      "version": "2.118.0"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_lambda.EventSourceMapping",
+                  "version": "2.118.0"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.aws_lambda.Function",
+              "version": "2.118.0"
+            }
+          },
+          "ListImagesLambda": {
+            "id": "ListImagesLambda",
+            "path": "RekognitionStack/ListImagesLambda",
+            "children": {
+              "ServiceRole": {
+                "id": "ServiceRole",
+                "path": "RekognitionStack/ListImagesLambda/ServiceRole",
+                "children": {
+                  "ImportServiceRole": {
+                    "id": "ImportServiceRole",
+                    "path": "RekognitionStack/ListImagesLambda/ServiceRole/ImportServiceRole",
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.Resource",
+                      "version": "2.118.0"
+                    }
+                  },
+                  "PrecreatedRoleServiceRole": {
+                    "id": "PrecreatedRoleServiceRole",
+                    "path": "RekognitionStack/ListImagesLambda/ServiceRole/PrecreatedRoleServiceRole",
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.Resource",
+                      "version": "2.118.0"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_iam.Role",
+                  "version": "2.118.0"
+                }
+              },
+              "Code": {
+                "id": "Code",
+                "path": "RekognitionStack/ListImagesLambda/Code",
+                "children": {
+                  "Stage": {
+                    "id": "Stage",
+                    "path": "RekognitionStack/ListImagesLambda/Code/Stage",
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.AssetStaging",
+                      "version": "2.118.0"
+                    }
+                  },
+                  "AssetBucket": {
+                    "id": "AssetBucket",
+                    "path": "RekognitionStack/ListImagesLambda/Code/AssetBucket",
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_s3.BucketBase",
+                      "version": "2.118.0"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_s3_assets.Asset",
+                  "version": "2.118.0"
+                }
+              },
+              "Resource": {
+                "id": "Resource",
+                "path": "RekognitionStack/ListImagesLambda/Resource",
+                "attributes": {
+                  "aws:cdk:cloudformation:type": "AWS::Lambda::Function",
+                  "aws:cdk:cloudformation:props": {
+                    "code": {
+                      "s3Bucket": {
+                        "Fn::Sub": "cdk-hnb659fds-assets-${AWS::AccountId}-us-east-1"
+                      },
+                      "s3Key": "06e921cd0a07cce10fca73b31d2108307a1ad534853294c7dff47050ebc0fb05.zip"
+                    },
+                    "environment": {
+                      "variables": {
+                        "TABLE_NAME": {
+                          "Ref": "Classifications0C921F6C"
+                        }
+                      }
+                    },
+                    "functionName": "ListImagesLambda",
+                    "handler": "list_images.handler",
+                    "role": {
+                      "Fn::Join": [
+                        "",
+                        [
+                          "arn:",
+                          {
+                            "Ref": "AWS::Partition"
+                          },
+                          ":iam::",
+                          {
+                            "Ref": "AWS::AccountId"
+                          },
+                          ":role/cdk-rekognition-role"
+                        ]
+                      ]
+                    },
+                    "runtime": "python3.11"
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_lambda.CfnFunction",
+                  "version": "2.118.0"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.aws_lambda.Function",
+              "version": "2.118.0"
+            }
+          },
+          "REST_API": {
+            "id": "REST_API",
+            "path": "RekognitionStack/REST_API",
+            "children": {
+              "Resource": {
+                "id": "Resource",
+                "path": "RekognitionStack/REST_API/Resource",
+                "attributes": {
+                  "aws:cdk:cloudformation:type": "AWS::ApiGateway::RestApi",
+                  "aws:cdk:cloudformation:props": {
+                    "description": "CW workshop - list images recognized from workshop.",
+                    "name": "List Images Service"
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_apigateway.CfnRestApi",
+                  "version": "2.118.0"
+                }
+              },
+              "Deployment": {
+                "id": "Deployment",
+                "path": "RekognitionStack/REST_API/Deployment",
+                "children": {
+                  "Resource": {
+                    "id": "Resource",
+                    "path": "RekognitionStack/REST_API/Deployment/Resource",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::ApiGateway::Deployment",
+                      "aws:cdk:cloudformation:props": {
+                        "description": "CW workshop - list images recognized from workshop.",
+                        "restApiId": {
+                          "Ref": "RESTAPI561F5063"
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_apigateway.CfnDeployment",
+                      "version": "2.118.0"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_apigateway.Deployment",
+                  "version": "2.118.0"
+                }
+              },
+              "DeploymentStage.prod": {
+                "id": "DeploymentStage.prod",
+                "path": "RekognitionStack/REST_API/DeploymentStage.prod",
+                "children": {
+                  "Resource": {
+                    "id": "Resource",
+                    "path": "RekognitionStack/REST_API/DeploymentStage.prod/Resource",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::ApiGateway::Stage",
+                      "aws:cdk:cloudformation:props": {
+                        "deploymentId": {
+                          "Ref": "RESTAPIDeployment929885705dcbe6d1c15be769263cf19404f46f42"
+                        },
+                        "restApiId": {
+                          "Ref": "RESTAPI561F5063"
+                        },
+                        "stageName": "prod"
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_apigateway.CfnStage",
+                      "version": "2.118.0"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_apigateway.Stage",
+                  "version": "2.118.0"
+                }
+              },
+              "Endpoint": {
+                "id": "Endpoint",
+                "path": "RekognitionStack/REST_API/Endpoint",
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.CfnOutput",
+                  "version": "2.118.0"
+                }
+              },
+              "Default": {
+                "id": "Default",
+                "path": "RekognitionStack/REST_API/Default",
+                "children": {
+                  "GET": {
+                    "id": "GET",
+                    "path": "RekognitionStack/REST_API/Default/GET",
+                    "children": {
+                      "ApiPermission.RekognitionStackRESTAPI2B03A7E5.GET..": {
+                        "id": "ApiPermission.RekognitionStackRESTAPI2B03A7E5.GET..",
+                        "path": "RekognitionStack/REST_API/Default/GET/ApiPermission.RekognitionStackRESTAPI2B03A7E5.GET..",
+                        "attributes": {
+                          "aws:cdk:cloudformation:type": "AWS::Lambda::Permission",
+                          "aws:cdk:cloudformation:props": {
+                            "action": "lambda:InvokeFunction",
+                            "functionName": {
+                              "Fn::GetAtt": [
+                                "ListImagesLambda8268811D",
+                                "Arn"
+                              ]
+                            },
+                            "principal": "apigateway.amazonaws.com",
+                            "sourceArn": {
+                              "Fn::Join": [
+                                "",
+                                [
+                                  "arn:",
+                                  {
+                                    "Ref": "AWS::Partition"
+                                  },
+                                  ":execute-api:us-east-1:",
+                                  {
+                                    "Ref": "AWS::AccountId"
+                                  },
+                                  ":",
+                                  {
+                                    "Ref": "RESTAPI561F5063"
+                                  },
+                                  "/",
+                                  {
+                                    "Ref": "RESTAPIDeploymentStageprod97809C34"
+                                  },
+                                  "/GET/"
+                                ]
+                              ]
+                            }
+                          }
+                        },
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.aws_lambda.CfnPermission",
+                          "version": "2.118.0"
+                        }
+                      },
+                      "ApiPermission.Test.RekognitionStackRESTAPI2B03A7E5.GET..": {
+                        "id": "ApiPermission.Test.RekognitionStackRESTAPI2B03A7E5.GET..",
+                        "path": "RekognitionStack/REST_API/Default/GET/ApiPermission.Test.RekognitionStackRESTAPI2B03A7E5.GET..",
+                        "attributes": {
+                          "aws:cdk:cloudformation:type": "AWS::Lambda::Permission",
+                          "aws:cdk:cloudformation:props": {
+                            "action": "lambda:InvokeFunction",
+                            "functionName": {
+                              "Fn::GetAtt": [
+                                "ListImagesLambda8268811D",
+                                "Arn"
+                              ]
+                            },
+                            "principal": "apigateway.amazonaws.com",
+                            "sourceArn": {
+                              "Fn::Join": [
+                                "",
+                                [
+                                  "arn:",
+                                  {
+                                    "Ref": "AWS::Partition"
+                                  },
+                                  ":execute-api:us-east-1:",
+                                  {
+                                    "Ref": "AWS::AccountId"
+                                  },
+                                  ":",
+                                  {
+                                    "Ref": "RESTAPI561F5063"
+                                  },
+                                  "/test-invoke-stage/GET/"
+                                ]
+                              ]
+                            }
+                          }
+                        },
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.aws_lambda.CfnPermission",
+                          "version": "2.118.0"
+                        }
+                      },
+                      "Resource": {
+                        "id": "Resource",
+                        "path": "RekognitionStack/REST_API/Default/GET/Resource",
+                        "attributes": {
+                          "aws:cdk:cloudformation:type": "AWS::ApiGateway::Method",
+                          "aws:cdk:cloudformation:props": {
+                            "authorizationType": "NONE",
+                            "httpMethod": "GET",
+                            "integration": {
+                              "type": "AWS_PROXY",
+                              "uri": {
+                                "Fn::Join": [
+                                  "",
+                                  [
+                                    "arn:",
+                                    {
+                                      "Ref": "AWS::Partition"
+                                    },
+                                    ":apigateway:us-east-1:lambda:path/2015-03-31/functions/",
+                                    {
+                                      "Fn::GetAtt": [
+                                        "ListImagesLambda8268811D",
+                                        "Arn"
+                                      ]
+                                    },
+                                    "/invocations"
+                                  ]
+                                ]
+                              },
+                              "integrationHttpMethod": "POST",
+                              "requestTemplates": {
+                                "application/json": "{ \"statusCode\": \"200\" }"
+                              }
+                            },
+                            "resourceId": {
+                              "Fn::GetAtt": [
+                                "RESTAPI561F5063",
+                                "RootResourceId"
+                              ]
+                            },
+                            "restApiId": {
+                              "Ref": "RESTAPI561F5063"
+                            }
+                          }
+                        },
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.aws_apigateway.CfnMethod",
+                          "version": "2.118.0"
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_apigateway.Method",
+                      "version": "2.118.0"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_apigateway.ResourceBase",
+                  "version": "2.118.0"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.aws_apigateway.RestApi",
+              "version": "2.118.0"
+            }
+          },
+          "CDKMetadata": {
+            "id": "CDKMetadata",
+            "path": "RekognitionStack/CDKMetadata",
+            "children": {
+              "Default": {
+                "id": "Default",
+                "path": "RekognitionStack/CDKMetadata/Default",
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.CfnResource",
+                  "version": "2.118.0"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "constructs.Construct",
+              "version": "10.3.0"
+            }
+          },
+          "BootstrapVersion": {
+            "id": "BootstrapVersion",
+            "path": "RekognitionStack/BootstrapVersion",
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.CfnParameter",
+              "version": "2.118.0"
+            }
+          },
+          "CheckBootstrapVersion": {
+            "id": "CheckBootstrapVersion",
+            "path": "RekognitionStack/CheckBootstrapVersion",
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.CfnRule",
+              "version": "2.118.0"
+            }
+          }
+        },
+        "constructInfo": {
+          "fqn": "aws-cdk-lib.Stack",
+          "version": "2.118.0"
+        }
+      },
+      "Tree": {
+        "id": "Tree",
+        "path": "Tree",
+        "constructInfo": {
+          "fqn": "constructs.Construct",
+          "version": "10.3.0"
+        }
+      }
+    },
+    "constructInfo": {
+      "fqn": "aws-cdk-lib.App",
+      "version": "2.118.0"
+    }
+  }
+}

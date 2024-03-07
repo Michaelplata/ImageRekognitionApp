@@ -1,0 +1,193 @@
+<cdk-apistack-role> (APIStack/ImageGetAndSaveLambda/ServiceRole)
+
+AssumeRole Policy:
+[
+  {
+    "Action": "sts:AssumeRole",
+    "Effect": "Allow",
+    "Principal": {
+      "Service": "lambda.amazonaws.com"
+    }
+  }
+]
+
+Managed Policy ARNs:
+[
+  "arn:(PARTITION):iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+]
+
+Managed Policies Statements:
+NONE
+
+Identity Policy Statements:
+[
+  {
+    "Action": [
+      "s3:GetObject*",
+      "s3:GetBucket*",
+      "s3:List*",
+      "s3:DeleteObject*",
+      "s3:PutObject",
+      "s3:PutObjectLegalHold",
+      "s3:PutObjectRetention",
+      "s3:PutObjectTagging",
+      "s3:PutObjectVersionTagging",
+      "s3:Abort*"
+    ],
+    "Effect": "Allow",
+    "Resource": [
+      "(APIStack/CW-Workshop-Images/Resource.Arn)",
+      "(APIStack/CW-Workshop-Images/Resource.Arn)/*"
+    ]
+  }
+]<cdk-apistack-role> (APIStack/BucketNotificationsHandler050a0587b7544547bf325f094a3db834/Role)
+
+AssumeRole Policy:
+[
+  {
+    "Action": "sts:AssumeRole",
+    "Effect": "Allow",
+    "Principal": {
+      "Service": "lambda.amazonaws.com"
+    }
+  }
+]
+
+Managed Policy ARNs:
+[
+  "arn:(PARTITION):iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+]
+
+Managed Policies Statements:
+NONE
+
+Identity Policy Statements:
+[
+  {
+    "Action": "s3:PutBucketNotification",
+    "Effect": "Allow",
+    "Resource": "*"
+  }
+]<AWSServiceRoleForApplicationAutoScaling_DynamoDBTable> (RekognitionStack/Classifications/ScalingRole)
+
+AssumeRole Policy:
+NONE
+
+Managed Policy ARNs:
+NONE
+
+Managed Policies Statements:
+NONE
+
+Identity Policy Statements:
+NONE<cdk-rekognition-role> (RekognitionStack/image_recognition/ServiceRole)
+
+AssumeRole Policy:
+[
+  {
+    "Action": "sts:AssumeRole",
+    "Effect": "Allow",
+    "Principal": {
+      "Service": "lambda.amazonaws.com"
+    }
+  }
+]
+
+Managed Policy ARNs:
+[
+  "arn:(PARTITION):iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+]
+
+Managed Policies Statements:
+NONE
+
+Identity Policy Statements:
+[
+  {
+    "Action": "rekognition:DetectLabels",
+    "Effect": "Allow",
+    "Resource": "*"
+  },
+  {
+    "Action": "sns:publish",
+    "Effect": "Allow",
+    "Resource": "*"
+  },
+  {
+    "Action": [
+      "sqs:ChangeMessageVisibility",
+      "sqs:DeleteMessage",
+      "sqs:GetQueueAttributes",
+      "sqs:GetQueueUrl",
+      "sqs:ReceiveMessage"
+    ],
+    "Effect": "Allow",
+    "Resource": "*"
+  },
+  {
+    "Action": [
+      "dynamodb:BatchGetItem",
+      "dynamodb:GetRecords",
+      "dynamodb:GetShardIterator",
+      "dynamodb:Query",
+      "dynamodb:GetItem",
+      "dynamodb:Scan",
+      "dynamodb:ConditionCheckItem",
+      "dynamodb:BatchWriteItem",
+      "dynamodb:PutItem",
+      "dynamodb:UpdateItem",
+      "dynamodb:DeleteItem",
+      "dynamodb:DescribeTable"
+    ],
+    "Effect": "Allow",
+    "Resource": [
+      "(RekognitionStack/Classifications/Resource.Arn)",
+      "${Token[TOKEN.209]}"
+    ]
+  },
+  {
+    "Action": "s3:get*",
+    "Effect": "Allow",
+    "Resource": "*"
+  }
+]<cdk-rekognition-role> (RekognitionStack/ListImagesLambda/ServiceRole)
+
+AssumeRole Policy:
+[
+  {
+    "Action": "sts:AssumeRole",
+    "Effect": "Allow",
+    "Principal": {
+      "Service": "lambda.amazonaws.com"
+    }
+  }
+]
+
+Managed Policy ARNs:
+[
+  "arn:(PARTITION):iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+]
+
+Managed Policies Statements:
+NONE
+
+Identity Policy Statements:
+[
+  {
+    "Action": [
+      "dynamodb:BatchGetItem",
+      "dynamodb:GetRecords",
+      "dynamodb:GetShardIterator",
+      "dynamodb:Query",
+      "dynamodb:GetItem",
+      "dynamodb:Scan",
+      "dynamodb:ConditionCheckItem",
+      "dynamodb:DescribeTable"
+    ],
+    "Effect": "Allow",
+    "Resource": [
+      "(RekognitionStack/Classifications/Resource.Arn)",
+      "${Token[TOKEN.251]}"
+    ]
+  }
+]

@@ -1,0 +1,427 @@
+{
+  "version": "36.0.0",
+  "artifacts": {
+    "APIStack.assets": {
+      "type": "cdk:asset-manifest",
+      "properties": {
+        "file": "APIStack.assets.json",
+        "requiresBootstrapStackVersion": 6,
+        "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version"
+      }
+    },
+    "APIStack": {
+      "type": "aws:cloudformation:stack",
+      "environment": "aws://unknown-account/us-east-1",
+      "properties": {
+        "templateFile": "APIStack.template.json",
+        "terminationProtection": false,
+        "validateOnSynth": false,
+        "assumeRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-deploy-role-${AWS::AccountId}-us-east-1",
+        "cloudFormationExecutionRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-cfn-exec-role-${AWS::AccountId}-us-east-1",
+        "stackTemplateAssetObjectUrl": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-us-east-1/c37d1fe77884fc2c83f68441f09359c86307113c31aa1631a0a94f6bd7b473a5.json",
+        "requiresBootstrapStackVersion": 6,
+        "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version",
+        "additionalDependencies": [
+          "APIStack.assets"
+        ],
+        "lookupRole": {
+          "arn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-lookup-role-${AWS::AccountId}-us-east-1",
+          "requiresBootstrapStackVersion": 8,
+          "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version"
+        }
+      },
+      "dependencies": [
+        "APIStack.assets"
+      ],
+      "metadata": {
+        "/APIStack/CW-Workshop-Images/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CWWorkshopImagesF0DA5E9F"
+          }
+        ],
+        "/APIStack/CW-Workshop-Images/Notifications/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CWWorkshopImagesNotificationsADBAED03"
+          }
+        ],
+        "/APIStack/requests_layer/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "requestslayerBEFAAC3C"
+          }
+        ],
+        "/APIStack/ImageGetAndSaveLambda/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ImageGetAndSaveLambdaD4989ABD"
+          }
+        ],
+        "/APIStack/REST_API/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "RESTAPI561F5063"
+          }
+        ],
+        "/APIStack/REST_API/Deployment/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "RESTAPIDeployment929885702852626a3f4d864511a4e936eb1e6fb5"
+          }
+        ],
+        "/APIStack/REST_API/DeploymentStage.prod/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "RESTAPIDeploymentStageprod97809C34"
+          }
+        ],
+        "/APIStack/REST_API/Endpoint": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "RESTAPIEndpoint0F9F3858"
+          }
+        ],
+        "/APIStack/REST_API/Default/GET/ApiPermission.APIStackRESTAPI4904C8F9.GET..": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "RESTAPIGETApiPermissionAPIStackRESTAPI4904C8F9GET034CFEBF"
+          }
+        ],
+        "/APIStack/REST_API/Default/GET/ApiPermission.Test.APIStackRESTAPI4904C8F9.GET..": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "RESTAPIGETApiPermissionTestAPIStackRESTAPI4904C8F9GET31DCD434"
+          }
+        ],
+        "/APIStack/REST_API/Default/GET/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "RESTAPIGET45321992"
+          }
+        ],
+        "/APIStack/uploaded_image_queue/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "uploadedimagequeue43D6CD3D"
+          }
+        ],
+        "/APIStack/uploaded_image_queue/Policy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "uploadedimagequeuePolicyDB7BBA50"
+          }
+        ],
+        "/APIStack/uploaded_image_queue/APIStackuploadedimagetopic18C46AFD/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "uploadedimagequeueAPIStackuploadedimagetopic18C46AFD2B4F2161"
+          }
+        ],
+        "/APIStack/uploaded_image_topic/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "uploadedimagetopic9EF836CA"
+          }
+        ],
+        "/APIStack/uploaded_image_topic/Policy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "uploadedimagetopicPolicy80F4BA70"
+          }
+        ],
+        "/APIStack/BucketNotificationsHandler050a0587b7544547bf325f094a3db834/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "BucketNotificationsHandler050a0587b7544547bf325f094a3db8347ECC3691"
+          }
+        ],
+        "/APIStack/CDKMetadata/Default": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CDKMetadata"
+          }
+        ],
+        "/APIStack/Exports/Output{\"Ref\":\"uploadedimagequeue43D6CD3D\"}": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ExportsOutputRefuploadedimagequeue43D6CD3DC3CB92B0"
+          }
+        ],
+        "/APIStack/Exports/Output{\"Fn::GetAtt\":[\"uploadedimagequeue43D6CD3D\",\"Arn\"]}": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ExportsOutputFnGetAttuploadedimagequeue43D6CD3DArnCB5DD7AB"
+          }
+        ],
+        "/APIStack/BootstrapVersion": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "BootstrapVersion"
+          }
+        ],
+        "/APIStack/CheckBootstrapVersion": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CheckBootstrapVersion"
+          }
+        ]
+      },
+      "displayName": "APIStack"
+    },
+    "IntegrationStack.assets": {
+      "type": "cdk:asset-manifest",
+      "properties": {
+        "file": "IntegrationStack.assets.json",
+        "requiresBootstrapStackVersion": 6,
+        "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version"
+      }
+    },
+    "IntegrationStack": {
+      "type": "aws:cloudformation:stack",
+      "environment": "aws://unknown-account/us-east-1",
+      "properties": {
+        "templateFile": "IntegrationStack.template.json",
+        "terminationProtection": false,
+        "validateOnSynth": false,
+        "assumeRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-deploy-role-${AWS::AccountId}-us-east-1",
+        "cloudFormationExecutionRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-cfn-exec-role-${AWS::AccountId}-us-east-1",
+        "stackTemplateAssetObjectUrl": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-us-east-1/6076c5829b7a5c6b24ea6ca42fa5416ed838c59412c4038a45b1ad5eb3ef3a05.json",
+        "requiresBootstrapStackVersion": 6,
+        "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version",
+        "additionalDependencies": [
+          "IntegrationStack.assets"
+        ],
+        "lookupRole": {
+          "arn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-lookup-role-${AWS::AccountId}-us-east-1",
+          "requiresBootstrapStackVersion": 8,
+          "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version"
+        }
+      },
+      "dependencies": [
+        "IntegrationStack.assets"
+      ],
+      "metadata": {
+        "/IntegrationStack/rekognized_image_queue/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "rekognizedimagequeue8EB5D22B"
+          }
+        ],
+        "/IntegrationStack/rekognized_image_queue/Policy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "rekognizedimagequeuePolicy12DF9909"
+          }
+        ],
+        "/IntegrationStack/rekognized_image_queue/IntegrationStackrekognizedimagetopic71D3FAB2/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "rekognizedimagequeueIntegrationStackrekognizedimagetopic71D3FAB27102272F"
+          }
+        ],
+        "/IntegrationStack/rekognized_image_topic/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "rekognizedimagetopic58425D15"
+          }
+        ],
+        "/IntegrationStack/requests_layer/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "requestslayerBEFAAC3C"
+          }
+        ],
+        "/IntegrationStack/IntegrationLambda/ServiceRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "IntegrationLambdaServiceRoleD10E6540"
+          }
+        ],
+        "/IntegrationStack/IntegrationLambda/ServiceRole/DefaultPolicy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "IntegrationLambdaServiceRoleDefaultPolicy41EB3AE9"
+          }
+        ],
+        "/IntegrationStack/IntegrationLambda/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "IntegrationLambdaED741C51"
+          }
+        ],
+        "/IntegrationStack/IntegrationLambda/SqsEventSource:IntegrationStackrekognizedimagequeue0A194F37/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "IntegrationLambdaSqsEventSourceIntegrationStackrekognizedimagequeue0A194F3703587FB3"
+          }
+        ],
+        "/IntegrationStack/CDKMetadata/Default": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CDKMetadata"
+          }
+        ],
+        "/IntegrationStack/Exports/Output{\"Ref\":\"rekognizedimagetopic58425D15\"}": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ExportsOutputRefrekognizedimagetopic58425D1526204F7A"
+          }
+        ],
+        "/IntegrationStack/BootstrapVersion": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "BootstrapVersion"
+          }
+        ],
+        "/IntegrationStack/CheckBootstrapVersion": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CheckBootstrapVersion"
+          }
+        ]
+      },
+      "displayName": "IntegrationStack"
+    },
+    "RekognitionStack.assets": {
+      "type": "cdk:asset-manifest",
+      "properties": {
+        "file": "RekognitionStack.assets.json",
+        "requiresBootstrapStackVersion": 6,
+        "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version"
+      }
+    },
+    "RekognitionStack": {
+      "type": "aws:cloudformation:stack",
+      "environment": "aws://unknown-account/us-east-1",
+      "properties": {
+        "templateFile": "RekognitionStack.template.json",
+        "terminationProtection": false,
+        "validateOnSynth": false,
+        "assumeRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-deploy-role-${AWS::AccountId}-us-east-1",
+        "cloudFormationExecutionRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-cfn-exec-role-${AWS::AccountId}-us-east-1",
+        "stackTemplateAssetObjectUrl": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-us-east-1/f0845fbca335a7e769352054822c97b012d649a7c58596174b8a1729bff4f1ba.json",
+        "requiresBootstrapStackVersion": 6,
+        "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version",
+        "additionalDependencies": [
+          "RekognitionStack.assets"
+        ],
+        "lookupRole": {
+          "arn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-lookup-role-${AWS::AccountId}-us-east-1",
+          "requiresBootstrapStackVersion": 8,
+          "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version"
+        }
+      },
+      "dependencies": [
+        "APIStack",
+        "IntegrationStack",
+        "RekognitionStack.assets"
+      ],
+      "metadata": {
+        "/RekognitionStack/RekGroup/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "RekGroupA41E1449"
+          }
+        ],
+        "/RekognitionStack/RekUser/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "RekUser3D0D460A"
+          }
+        ],
+        "/RekognitionStack/Classifications/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "Classifications0C921F6C"
+          }
+        ],
+        "/RekognitionStack/image_recognition/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "imagerecognitionDAD22C25"
+          }
+        ],
+        "/RekognitionStack/image_recognition/ImgRekognitionLambda/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "imagerecognitionImgRekognitionLambdaAB473D39"
+          }
+        ],
+        "/RekognitionStack/ListImagesLambda/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ListImagesLambda8268811D"
+          }
+        ],
+        "/RekognitionStack/REST_API/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "RESTAPI561F5063"
+          }
+        ],
+        "/RekognitionStack/REST_API/Deployment/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "RESTAPIDeployment929885705dcbe6d1c15be769263cf19404f46f42"
+          }
+        ],
+        "/RekognitionStack/REST_API/DeploymentStage.prod/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "RESTAPIDeploymentStageprod97809C34"
+          }
+        ],
+        "/RekognitionStack/REST_API/Endpoint": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "RESTAPIEndpoint0F9F3858"
+          }
+        ],
+        "/RekognitionStack/REST_API/Default/GET/ApiPermission.RekognitionStackRESTAPI2B03A7E5.GET..": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "RESTAPIGETApiPermissionRekognitionStackRESTAPI2B03A7E5GET91F4255F"
+          }
+        ],
+        "/RekognitionStack/REST_API/Default/GET/ApiPermission.Test.RekognitionStackRESTAPI2B03A7E5.GET..": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "RESTAPIGETApiPermissionTestRekognitionStackRESTAPI2B03A7E5GET9347BE99"
+          }
+        ],
+        "/RekognitionStack/REST_API/Default/GET/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "RESTAPIGET45321992"
+          }
+        ],
+        "/RekognitionStack/CDKMetadata/Default": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CDKMetadata"
+          }
+        ],
+        "/RekognitionStack/BootstrapVersion": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "BootstrapVersion"
+          }
+        ],
+        "/RekognitionStack/CheckBootstrapVersion": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CheckBootstrapVersion"
+          }
+        ]
+      },
+      "displayName": "RekognitionStack"
+    },
+    "Tree": {
+      "type": "cdk:tree",
+      "properties": {
+        "file": "tree.json"
+      }
+    }
+  }
+}

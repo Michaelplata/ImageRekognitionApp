@@ -1,0 +1,34 @@
+{
+  "version": "36.0.0",
+  "files": {
+    "06e921cd0a07cce10fca73b31d2108307a1ad534853294c7dff47050ebc0fb05": {
+      "source": {
+        "path": "asset.06e921cd0a07cce10fca73b31d2108307a1ad534853294c7dff47050ebc0fb05",
+        "packaging": "zip"
+      },
+      "destinations": {
+        "current_account-us-east-1": {
+          "bucketName": "cdk-hnb659fds-assets-${AWS::AccountId}-us-east-1",
+          "objectKey": "06e921cd0a07cce10fca73b31d2108307a1ad534853294c7dff47050ebc0fb05.zip",
+          "region": "us-east-1",
+          "assumeRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-file-publishing-role-${AWS::AccountId}-us-east-1"
+        }
+      }
+    },
+    "f0845fbca335a7e769352054822c97b012d649a7c58596174b8a1729bff4f1ba": {
+      "source": {
+        "path": "RekognitionStack.template.json",
+        "packaging": "file"
+      },
+      "destinations": {
+        "current_account-us-east-1": {
+          "bucketName": "cdk-hnb659fds-assets-${AWS::AccountId}-us-east-1",
+          "objectKey": "f0845fbca335a7e769352054822c97b012d649a7c58596174b8a1729bff4f1ba.json",
+          "region": "us-east-1",
+          "assumeRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-file-publishing-role-${AWS::AccountId}-us-east-1"
+        }
+      }
+    }
+  },
+  "dockerImages": {}
+}
